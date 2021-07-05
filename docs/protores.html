@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>ProtoRes: Proto-Residual Architecture for Deep Modeling of Human Pose by felix-harvey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">ProtoRes: Proto-Residual Architecture for Deep Modeling of Human Pose</h1>
+      <p class="author-names">Boris N. Oreshkin  -  Florent Bocquelet  -  Félix G. Harvey  -  Bay Raitt  -  Dominic Laflamme<p>
+	  <img src="./media/unity-masterbrand-black.png" alt="Unity" style="width:125px">
+		<section>  </section>
+      <span><a href="https://arxiv.org/abs/2106.01981" class="btn">Paper</a></span> &nbsp &nbsp <span class="inactive_btn">Data</span> <span class="inactive_btn">Code</span>
+	  <br>
+	  <span class="small-grey">Data and code coming soon.</span>
+	</section>
+
+    <section class="main-content">
+      
+
+<div class="row">
+  <div class="column1">
+	<figure>  
+		<img src="./media/kung_fusupercut.gif" alt="Posing from image" style="width:100%">
+		<figcaption>Sequence of manipulations done with ProtoRes to produce a pose taken from an image.</figcaption>
+	</figure>
+  </div>
+  <div class="column2">
+	<figure>  
+		<img src="./media/lookat_animated.gif" alt="Animated look-at target" style="width:100%">
+		<figcaption> Demonstration of the widespread effects of a single effector to keep the generated pose plausible.</figcaption>
+	</figure>
+  </div>
+  
+</div>
+
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+<p> &nbsp &nbsp	&nbsp Modeling human pose and learning pose representations have received increasing attention recently due to their prominence in applications, including computer graphics and animation, pose and motion estimation from video, immersive augmented reality, entertainment, sports and wellness, human machine interaction and autonomous driving. In the gaming industry, state-of-the-art real-time pose manipulation tools, such as <a href="http://number-none.com/product/IK%20with%20Quaternion%20Joint%20Limits/">CCD</a>, <a href="https://www.youtube.com/watch?v=UNoX65PRehA">FABRIK</a>, or <a href="https://assetstore.unity.com/packages/tools/animation/final-ik-14290">FinalIK</a>, are popular for rapid execution and rely on forward and inverse kinematic models defined via non-learnable kinematic equations. While mathematically accurate, these non-learnable kinematic models do not guarantee that the underconstrained solutions derived from sparse constraints (e.g. positions of a subset of joints) result in plausible human poses. In contrast, more often than not sparse constraints give rise to perturbations of pose parameters that look unnatural even to the untrained eye. The main reason behind it is the lack of inductive bias to resolve an ill-posed problem of recovering the full pose from a small set of constraints.</p>
+
+
+<p> &nbsp &nbsp	&nbsp This work focuses on the development of a learnable neural representation of human pose for advanced AI assisted animation tooling. Specifically, we tackle the problem of constructing a full static human pose based on sparse and variable user inputs (e.g. locations and/or orientations of a subset of body joints). To solve this problem, we propose a novel neural architecture named ProtoRes that combines residual connections with prototype encoding of a partially specified pose to create a new complete pose from the learned latent space.</p>
+
+<p><img src="media/protores_highlevel.png" alt="overview" class="center"/></p>
+
+<p> &nbsp &nbsp	&nbsp We show that our architecture outperforms a baseline based on Transformer, both in terms of accuracy and computational efficiency. Additionally, we develop a user interface to integrate our neural model in the real-time 3D development platform Unity. Furthermore, we introduce two new datasets representing the static human pose modeling problem, based on high-quality human motion capture data, which will be released publicly along with model code.
+</p>
+<br>
+<br>
+
+<img src="media/GIF_HD_positions_1.gif" alt="positional effectors" class="left"/><p>  <br> <br> <strong>Positional effectors</strong> can be manipulated to constrain the position of certain joints. On each update, ProtoRes generates a full body pose from the current effector states.</p>
+
+<br>
+<br>
+<br>
+<br>
+
+<img src="media/GIF_HD_rotations_1.gif" alt="rotational effectors" class="right"/>
+<p> <br> <br> <br> <br> <strong>Rotational effectors</strong> allow users to control the global rotations of desired joints.</p>
+
+<br>
+<br>
+<br>
+<br>
+<img src="media/GIF_HD_lookat.gif" alt="look-at effectors" class="left"/>
+<p>  <br> <br> <br> <strong>Look-at effectors</strong> can be positioned to align the orientation of a joint towards a target. Rotating a look-at effector also allows one to control the joint’s local axis to be aligned with that specific target.
+</p>
+<br>
+<br>
+<br>
+<br>
+
+
+<h2><a id="poses-from-silhouettes" class="anchor" href="#poses-from-silhouettes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quickly authoring poses from silhouette images</h2>
+<p> &nbsp &nbsp	&nbsp We showcase below the few manipulations required by a novice user to create poses similar to the ones given as images as seen on the top-right of the scene view. Good poses are usually obtained in less than a minute.</p>
+<div class="video-container">
+  <video controls autoplay muted class="video">
+  <source src="media/2_Posing_from_images.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+  </video>
+</div>
+<br>
+
+
+<h2><a id="architecture" class="anchor" href="#architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Architecture</h2>
+<img src="media/protores.png" alt="hi" class="inline"/>
+<p> &nbsp &nbsp	&nbsp Our proposed architecture follows the encoder-decoder pattern and produces predictions in three steps. First, a variable number and type of user supplied inputs (effectors) are processed for translation invariance and embedded. Second, the architectural core, a proto-residual encoder, transforms the pose specified via effectors into a single vector (pose embedding). Finally, the pose decoder expands the pose embedding into the full-body pose representation including local rotation and global position of each joint.</p>
+
+<p> &nbsp &nbsp	&nbsp See the <a href="https://arxiv.org/abs/2106.01981">paper</a> for more details and more results. </p>
+
+
+
+
+
+  <footer class="site-footer">
+	<span class="site-footer-credits">This page was created with <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+  </footer>
+
+</section>
+
+  
+  </body>
+</html>
