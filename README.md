@@ -1,4 +1,4 @@
-# Labs
-# Converting to public repository
-Any and all Unity software of any description (including components) (1) whose source is to be made available other than under a Unity source code license or (2) in respect of which a public announcement is to be made concerning its inner workings, may be licensed and released only upon the prior approval of Legal.
-The process for that is to access, complete, and submit this [FORM](https://docs.google.com/forms/d/e/1FAIpQLSe3H6PARLPIkWVjdB_zMvuIuIVtrqNiGlEt1yshkMCmCMirvA/viewform).
+# Unity Technologies - Labs
+Unity Labs is the future research group at Unity Technologies. We are a group of research scientists, game industry veterans, machine learning experts and technical artists working on research in many domain like animation, navigation and pathfinding, machine learning and rendering. This respository holds a growing collection of research papers, supplemental material and source code for the research we have made public.
+
+
