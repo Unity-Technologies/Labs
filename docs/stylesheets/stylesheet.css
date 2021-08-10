@@ -27,6 +27,17 @@ a {
   padding: 1px;
 }
 
+.column_left {
+  float: left;
+  width: 50.0%;
+  padding: 1px;
+}
+.column_right {
+  float: left;
+  width: 50.0%;
+  padding: 1px;
+}
+
 h1{text-align: center;}
 h2{text-align: center;
 	font-weight: bold;}
