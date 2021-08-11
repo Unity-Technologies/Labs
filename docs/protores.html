@@ -77,7 +77,7 @@
 <br>
 
 
-<h2><a id="poses-from-silhouettes" class="anchor" href="#poses-from-silhouettes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quickly authoring poses from silhouette images</h2>
+<h2><a id="poses-from-silhouettes" class="anchor" href="#poses-from-silhouettes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quickly Authoring Poses from Silhouette Images</h2>
 <p> &nbsp &nbsp	&nbsp We showcase below the few manipulations required by a novice user to create poses similar to the ones given as images as seen on the top-right of the scene view. Good poses are usually obtained in less than a minute.</p>
 <div class="video-container">
   <video controls autoplay muted class="video">
@@ -87,19 +87,19 @@
 </div>
 <br>
 
-<h2><a id="retargeting onto other humanoids" class="anchor" href="#retargeting" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Retargeting onto other humanoids</h2>
-<p> &nbsp &nbsp	&nbsp Through automatic retargeting of humanoid characters, we can easily apply ProtoRes onto a wide range human skeletons.</p>
+<h2><a id="retargeting" class="anchor" href="#retargeting" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Retargeting</h2>
+<p> &nbsp &nbsp	&nbsp By leveraging conventional retargeting and inverse kinematics methods, we can apply ProtoRes on a wide range of skeletons. Here we showcase several examples using Unity Mecanim retargeting for humanoid skeleton.</p>
 <div class="row">
   <div class="column_left">
 	<figure>  
 		<img src="./media/retargeting_watson.gif" alt="retagreting_watson" style="width:100%">
-		<figcaption><a href="https://assetstore.unity.com/packages/3d/characters/humanoids/winston-iclone-character-50694">Link to character asset</a></figcaption>
+		<figcaption>Credits : Reallusion (<a href="https://assetstore.unity.com/packages/3d/characters/humanoids/winston-iclone-character-50694">link</a>)</figcaption>
 	</figure>
   </div>
   <div class="column_right">
 	<figure>  
 		<img src="./media/retargeting_elf.gif" alt="retagreting_elf" style="width:100%">
-		<figcaption><a href="https://assetstore.unity.com/packages/3d/characters/humanoids/character-elf-114445">Link to character asset</a></figcaption>
+		<figcaption>Credits : Maksim Bugrimov (<a href="https://assetstore.unity.com/packages/3d/characters/humanoids/character-elf-114445">link</a>)</figcaption>
 	</figure>
   </div>
 </div>
@@ -107,24 +107,34 @@
   <div class="column_left">
 	<figure>  
 		<img src="./media/retargeting_ellen.gif" alt="retagreting_watson" style="width:100%">
-		<figcaption><a href="https://assetstore.unity.com/packages/templates/tutorials/3d-game-kit-lite-135162">Link to character asset</a></figcaption>
+		<figcaption>Credits : Unity Technologies (<a href="https://assetstore.unity.com/packages/templates/tutorials/3d-game-kit-lite-135162">link</a>)</figcaption>
 	</figure>
   </div>
   <div class="column_right">
 	<figure>  
 		<img src="./media/retargeting_wolf3d.gif" alt="retagreting_elf" style="width:100%">
-		<figcaption><a href="https://assetstore.unity.com/packages/3d/characters/human-characters-free-sample-pack-181554">Link to character asset</a></figcaption>
+		<figcaption>Credits : Wolf3D_ReadyPlayerMe (<a href="https://assetstore.unity.com/packages/3d/characters/human-characters-free-sample-pack-181554">link</a>)</figcaption>
 	</figure>
   </div>
 </div>
 <br>
 
 
-<h2><a id="retraining with a different skeleton configuration" class="anchor" href="#retraining" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Retraining ProtoRes with a different skeleton configuration</h2>
-<p> &nbsp &nbsp	&nbsp Without any modification to the architecture or hyper-parameters, we can retrain ProtoRes to handle a completely different skeleton and dataset. We test this using the <a href="https://github.com/sebastianstarke/AI4Animation">quadruped dataset made available by Zhang, Starke et al.</a> and use ProtoRes on a dog skeleton. This allows us to assess how different skeleton hierarchies and different datasets drive the inductive biases learned by ProtoRes, allowing one to customize the resulting posing tool.</p>
+<h2><a id="retraining" class="anchor" href="#retraining" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Retraining</h2>
+<p> &nbsp &nbsp	&nbsp We can also apply ProtoRes on a completely different skeleton by retraining the model on a new dataset. We showcase here this ability by applying ProtoRes on a <a href="https://github.com/sebastianstarke/AI4Animation">quadruped dataset</a> made available by Zhang, Starke et al. to pose a dog.</p>
+
+
 <img src="./media/quadruped.gif" alt="quadruped" style="width:100%">
 <figcaption>Results of ProtoRes retrained on a quadruped skeleton, without changes to the architecture or hyper-parameters</figcaption>
 
+<br>
+<p>Leveraging retartegting and retraining, we can build expressive posing tools. Here is a particular setting with different ProtoRes models acting on different characters with tied effectors.</p>
+<img src="./media/tied_effectors.gif" alt="tied effectors" style="width:100%">
+<figcaption>Character credits: 
+<br>Male character : Maksim Bugrimov (<a href="https://assetstore.unity.com/packages/3d/characters/humanoids/humans/adventure-character-201384">link</a>)
+<br>Wolf : Zhang, Stake et al. (<a href="https://github.com/sebastianstarke/AI4Animation">link</a>)
+<br>Female character : Wolf3D_ReadyPlayerMe (<a href="https://assetstore.unity.com/packages/3d/characters/human-characters-free-sample-pack-181554">link</a>)
+</figcaption>
 
 
 <h2><a id="architecture" class="anchor" href="#architecture" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Architecture</h2>
