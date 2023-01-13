@@ -1,0 +1,3 @@
+base_config: default
+parameters:
+    model.seed: 0
