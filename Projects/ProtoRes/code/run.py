@@ -122,7 +122,7 @@ def main(filepath: str, overrides: list = []):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(add_help=False, description="Experiment")
-    parser.add_argument('--config', type=str, help='Path to the experiment configuration file', required=True)
+    parser.add_argument('--config', type=str, help='Path to the experiment configuration file', default="protores/configs/experiments/default.yaml")
     parser.add_argument("overrides", nargs="*",
                         help="Any key=value arguments to override config values (use dots for.nested=overrides)", )
     args = parser.parse_args()
