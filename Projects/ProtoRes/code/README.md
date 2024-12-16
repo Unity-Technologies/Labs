@@ -11,7 +11,7 @@
 
 ## Before cloning
 
-Before cloning, make sure you have Git LFS install and enabled:
+Before cloning, make sure you have Git LFS installed and enabled:
 
 ~~~bash
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
