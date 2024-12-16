@@ -9,6 +9,22 @@
 
 ![Alt Text](./fig/kung_fusupercut.gif)
 
+## Before cloning
+
+Before cloning, make sure you have Git LFS installed and enabled:
+
+~~~bash
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+~~~
+
+If you install after cloning the repo you can force refetch the LFS files:
+
+~~~bash
+git lfs fetch --all
+git lfs pull
+~~~
+
 ## Create workspace and clone this repository
 
 ```mkdir workspace```

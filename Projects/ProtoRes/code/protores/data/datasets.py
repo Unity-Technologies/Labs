@@ -26,37 +26,32 @@ class TqdmUpTo(tqdm):
 		self.update(b * bsize - self.n)  # will also set self.n = b * bsize
 
 
-def download_and_unzip(local_dir, dataset_name, url):
+def unzip(src_dir, local_dir, dataset_name, dataset_zipfile_name):
 	target_dir = os.path.join(local_dir, dataset_name)
-	target_file = "downloaded"
-	full_download_path = os.path.join(target_dir, target_file)
+	zip_path = os.path.join(src_dir, dataset_zipfile_name)
 	check_file = os.path.join(target_dir, ".check")
 
-	if len(url) > 0 and (not os.path.isdir(target_dir) or not os.path.isfile(check_file)):
-		try:
-			os.makedirs(target_dir)
-		except:
-			pass
-		print("downloading dataset", local_dir, "from", url, "into", target_dir, "...")
-		with TqdmUpTo(unit='B', unit_scale=True, miniters=1,desc=local_dir) as t:
-			urllib.request.urlretrieve(url, filename=full_download_path,reporthook=t.update_to, data=None)
+	if not os.path.isfile(zip_path):
+		return False
 
-		print("extracting dataset", target_dir, "...")
-		with zipfile.ZipFile(full_download_path,"r") as zip_ref:
-			zip_ref.extractall(target_dir)
-		os.remove(full_download_path)
-		Path(check_file).touch()
+	if os.path.isfile(check_file):
 		return True
-	return False
+
+	print("extracting dataset", target_dir, "...")
+	with zipfile.ZipFile(zip_path,"r") as zip_ref:
+		zip_ref.extractall(local_dir)
+	Path(check_file).touch()
+	return True
 
 
 class DatasetLoader():
 	def __init__(self, dataset_path):
 		self.known_datasets = {
-			"deeppose_paper2021_minimixamo": "https://storage.googleapis.com/unity-rd-ml-graphics-prd-public/deeppose/datasets/deeppose_paper2021_minimixamo.zip",
-			"deeppose_paper2021_miniunity": "https://storage.googleapis.com/unity-rd-ml-graphics-prd-public/deeppose/datasets/deeppose_paper2021_miniunity.zip",
+			"deeppose_paper2021_minimixamo": "deeppose_paper2021_minimixamo.zip",
+			"deeppose_paper2021_miniunity": "deeppose_paper2021_miniunity.zip",
 		}
 		self.dataset_path = dataset_path
+		self.data_path = "data"
 
 	def path_of(self, dataset_name: str) -> str:
 		return os.path.join(self.dataset_path, dataset_name)
@@ -74,16 +69,16 @@ class DatasetLoader():
 		if not self.is_known(dataset_name):
 			raise Exception("dataset not available: " + dataset_name)
 
-		if not self._download_and_unzip(dataset_name):
-			raise Exception("downloading dataset failed: " + dataset_name)
+		if not self._unzip(dataset_name):
+			raise Exception("extracting dataset failed: " + dataset_name)
 
 		return self.pull(dataset_name)
 
 	def is_known(self, dataset_name: str) -> bool:
 		return dataset_name in self.known_datasets
 
-	def _download_and_unzip(self, dataset_name: str) -> bool:
-		return download_and_unzip(self.dataset_path, dataset_name, self.known_datasets[dataset_name])
+	def _unzip(self, dataset_name: str) -> bool:
+		return unzip(self.data_path, self.dataset_path, dataset_name, self.known_datasets[dataset_name])
 
 	def settings_file_of(self, dataset_name: str) -> Optional[str]:
 		path = self.path_of(dataset_name)
@@ -137,8 +132,8 @@ class SplitFileDatabaseLoader(DatasetLoader):
 		if not self.is_known(dataset_name):
 			raise Exception("dataset not available: " + dataset_name)
 
-		if not self._download_and_unzip(dataset_name):
-			raise Exception("downloading dataset failed: " + dataset_name)
+		if not self._unzip(dataset_name):
+			raise Exception("extracting dataset failed: " + dataset_name)
 
 		return self.pull(dataset_name)
 
