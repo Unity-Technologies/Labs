@@ -26,9 +26,9 @@ class TqdmUpTo(tqdm):
 		self.update(b * bsize - self.n)  # will also set self.n = b * bsize
 
 
-def unzip(local_dir, dataset_name, dataset_zipfile_name):
+def unzip(src_dir, local_dir, dataset_name, dataset_zipfile_name):
 	target_dir = os.path.join(local_dir, dataset_name)
-	zip_path = os.path.join(local_dir, dataset_zipfile_name)
+	zip_path = os.path.join(src_dir, dataset_zipfile_name)
 	check_file = os.path.join(target_dir, ".check")
 
 	if not os.path.isfile(zip_path):
@@ -51,6 +51,7 @@ class DatasetLoader():
 			"deeppose_paper2021_miniunity": "deeppose_paper2021_miniunity.zip",
 		}
 		self.dataset_path = dataset_path
+		self.data_path = "data"
 
 	def path_of(self, dataset_name: str) -> str:
 		return os.path.join(self.dataset_path, dataset_name)
@@ -77,7 +78,7 @@ class DatasetLoader():
 		return dataset_name in self.known_datasets
 
 	def _unzip(self, dataset_name: str) -> bool:
-		return unzip(self.dataset_path, dataset_name, self.known_datasets[dataset_name])
+		return unzip(self.data_path, self.dataset_path, dataset_name, self.known_datasets[dataset_name])
 
 	def settings_file_of(self, dataset_name: str) -> Optional[str]:
 		path = self.path_of(dataset_name)
