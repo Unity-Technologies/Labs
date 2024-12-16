@@ -11,12 +11,7 @@
 
 ## Before cloning
 
-Before cloning, make sure you have Git LFS installed and enabled:
-
-~~~bash
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-sudo apt-get install git-lfs
-~~~
+Before cloning, make sure you have [Git LFS installed and enabled](https://git-lfs.com/)
 
 If you install after cloning the repo you can force refetch the LFS files:
 
